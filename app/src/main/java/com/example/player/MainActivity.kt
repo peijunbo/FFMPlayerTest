@@ -1,6 +1,7 @@
 package com.example.player
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Surface
 import androidx.appcompat.app.AppCompatActivity
 import com.example.player.databinding.ActivityMainBinding
@@ -17,17 +18,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         writeRawFile(R.raw.gosick)
+        Log.d(TAG, "onCreate: ")
+        binding.mysurface.init(getFilePath("gosick.mp4"))
+        Log.d(TAG, "onCreate: init succeed")
         binding.audioButton.setOnClickListener {
-            startAudio(getFilePath("gosick.mp4"))
+            //startAudio(getFilePath("gosick.mp4"))
         }
         binding.playButton.setOnClickListener {
-            startPlayer(binding.surface.holder.surface,getFilePath("gosick.mp4"))
+            binding.mysurface.play();
+            // startPlayer(binding.surface.holder.surface,getFilePath("gosick.mp4"))
         }
 
     }
 
-    external fun startPlayer(surface: Surface, url: String)
-    external fun startAudio(url: String)
+    //external fun startPlayer(surface: Surface, url: String)
+    //external fun startAudio(url: String)
 
     fun writeRawFile(resId: Int) {
         val file = File(filesDir.absolutePath + File.separator + "gosick.mp4")
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         // Used to load the 'player' library on application startup.
         init {
-            System.loadLibrary("player")
+            System.loadLibrary("ffmpeg-player")
         }
     }
 }

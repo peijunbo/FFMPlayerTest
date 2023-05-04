@@ -7,7 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <SurfaceView android:id="@+id/surface"
+    <com.example.player.MyGLSurfaceView
+        android:id="@+id/mysurface"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8" />
+
+    <SurfaceView
+        android:id="@+id/surface"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8" />
