@@ -17,15 +17,15 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        writeRawFile(R.raw.gosick)
-        Log.d(TAG, "onCreate: ")
-        binding.mysurface.init(getFilePath("gosick.mp4"))
-        Log.d(TAG, "onCreate: init succeed")
+        writeRawFile(R.raw.gosick, "gosick.mp4")
+        writeRawFile(R.raw.test, "test.mp4")
+        binding.surface1.playerId = 1
+        binding.surface1.init(getFilePath("gosick.mp4"))
         binding.audioButton.setOnClickListener {
             //startAudio(getFilePath("gosick.mp4"))
         }
         binding.playButton.setOnClickListener {
-            binding.mysurface.play();
+            binding.surface1.play()
             // startPlayer(binding.surface.holder.surface,getFilePath("gosick.mp4"))
         }
 
@@ -34,8 +34,9 @@ class MainActivity : AppCompatActivity() {
     //external fun startPlayer(surface: Surface, url: String)
     //external fun startAudio(url: String)
 
-    fun writeRawFile(resId: Int) {
-        val file = File(filesDir.absolutePath + File.separator + "gosick.mp4")
+    fun writeRawFile(resId: Int, name: String) {
+
+        val file = File(filesDir.absolutePath + File.separator + name)
         if (file.exists()) return
         else {
             file.createNewFile()
@@ -47,6 +48,12 @@ class MainActivity : AppCompatActivity() {
 
     fun getFilePath(name: String): String {
         return filesDir.canonicalPath + File.separator + name
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.surface1.onResume()
+        binding.surface2.onResume()
     }
 
     companion object {

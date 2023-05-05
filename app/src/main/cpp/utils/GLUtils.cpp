@@ -48,7 +48,6 @@ GLuint GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFrag
     if (!vertexShaderHandle) return program;
     fragShaderHandle = LoadShader(GL_FRAGMENT_SHADER, pFragShaderSource);
     if (!fragShaderHandle) return program;
-
     program = glCreateProgram();
     if (program)
     {
@@ -85,7 +84,6 @@ GLuint GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFrag
         }
     }
     FUN_END_TIME("GLUtils::CreateProgram")
-    LOGE("GLUtils::CreateProgram program = %d", program);
     return program;
 }
 
@@ -140,7 +138,6 @@ GLuint GLUtils::CreateProgramWithFeedback(const char *pVertexShaderSource, const
         }
     }
     FUN_END_TIME("GLUtils::CreateProgramWithFeedback")
-    LOGE("GLUtils::CreateProgramWithFeedback program = %d", program);
     return program;
 }
 

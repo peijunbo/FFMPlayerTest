@@ -8,6 +8,7 @@ extern "C" {
 #include <libavutil/imgutils.h>
 #include <libswscale/swscale.h>
 #include <libavcodec/jni.h>
+#include "libavutil/imgutils.h"
 }
 #include "VideoRender.h"
 #include "DecoderBase.h"
@@ -39,13 +40,16 @@ public:
         m_VideoRender = videoRender;
     }
 
+    void SetDecodeToRGBA(bool decodeToRGBA) {
+        m_DecodeToRGBA = decodeToRGBA;
+    }
 private:
     virtual void OnDecoderReady();
     virtual void OnDecoderDone();
     virtual void OnFrameAvailable(AVFrame *frame);
 
     const AVPixelFormat DST_PIXEL_FORMAT = AV_PIX_FMT_RGBA;
-
+    bool m_DecodeToRGBA = false;
     int m_VideoWidth = 0;
     int m_VideoHeight = 0;
 
@@ -57,6 +61,7 @@ private:
 
     VideoRender *m_VideoRender = nullptr;
     SwsContext *m_SwsContext = nullptr;
+    SwsContext *m_RGBASwsContext = nullptr;
     // SingleVideoRecorder *m_pVideoRecorder = nullptr;
 };
 

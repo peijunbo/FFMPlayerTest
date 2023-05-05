@@ -161,7 +161,6 @@ void DecoderBase::StartDecodingThread() {
 }
 
 void DecoderBase::DecodingLoop() {
-    LOGE("DecoderBase::DecodingLoop start, m_MediaType=%d", m_MediaType);
     {
         std::unique_lock<std::mutex> lock(m_Mutex);
         m_DecoderState = STATE_DECODING;
@@ -171,7 +170,6 @@ void DecoderBase::DecodingLoop() {
     for(;;) {
         while (m_DecoderState == STATE_PAUSE) {
             std::unique_lock<std::mutex> lock(m_Mutex);
-            LOGE("DecoderBase::DecodingLoop waiting, m_MediaType=%d", m_MediaType);
             m_Cond.wait_for(lock, std::chrono::milliseconds(10));
             m_StartTimeStamp = GetSysCurrentTime() - m_CurTimeStamp;
         }
@@ -189,11 +187,9 @@ void DecoderBase::DecodingLoop() {
             m_DecoderState = STATE_PAUSE;
         }
     }
-    LOGE("DecoderBase::DecodingLoop end");
 }
 
 void DecoderBase::UpdateTimeStamp() {
-    LOGE("DecoderBase::UpdateTimeStamp");
     std::unique_lock<std::mutex> lock(m_Mutex);
     if(m_Frame->pkt_dts != AV_NOPTS_VALUE) {
         m_CurTimeStamp = m_Frame->pkt_dts;
@@ -214,7 +210,6 @@ void DecoderBase::UpdateTimeStamp() {
 }
 
 long DecoderBase::AVSync() {
-    LOGE("DecoderBase::AVSync");
     long curSysTime = GetSysCurrentTime();
     //基于系统时钟计算从开始播放流逝的时间
     long elapsedTime = curSysTime - m_StartTimeStamp;
@@ -238,7 +233,6 @@ long DecoderBase::AVSync() {
 }
 
 int DecoderBase::DecodeOnePacket() {
-    LOGE("DecoderBase::DecodeOnePacket m_MediaType=%d", m_MediaType);
     if(m_SeekPosition > 0) {
         //seek to frame
         auto seek_target = static_cast<int64_t>(m_SeekPosition * 1000000);//微秒
@@ -254,7 +248,6 @@ int DecoderBase::DecodeOnePacket() {
             }
             ClearCache();
             m_SeekSuccess = true;
-            LOGE("BaseDecoder::DecodeOneFrame seekFrame pos=%f, m_MediaType=%d", m_SeekPosition, m_MediaType);
         }
     }
     int result = av_read_frame(m_AVFormatContext, m_Packet);
@@ -281,12 +274,9 @@ int DecoderBase::DecodeOnePacket() {
                 //同步
                 AVSync();
                 //渲染
-                LOGE("DecoderBase::DecodeOnePacket 000 m_MediaType=%d", m_MediaType);
                 OnFrameAvailable(m_Frame);
-                LOGE("DecoderBase::DecodeOnePacket 0001 m_MediaType=%d", m_MediaType);
                 frameCount ++;
             }
-            LOGE("BaseDecoder::DecodeOneFrame frameCount=%d", frameCount);
             //判断一个 packet 是否解码完成
             if(frameCount > 0) {
                 result = 0;
@@ -303,7 +293,6 @@ int DecoderBase::DecodeOnePacket() {
 }
 
 void DecoderBase::DoAVDecoding(DecoderBase *decoder) {
-    LOGE("DecoderBase::DoAVDecoding");
     do {
         if(decoder->InitFFDecoder() != 0) {
             break;

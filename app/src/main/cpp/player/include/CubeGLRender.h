@@ -2,21 +2,19 @@
 // Created on 2023/5/4.
 //
 
-#ifndef PLAYER_VIDEOGLRENDER_H
-#define PLAYER_VIDEOGLRENDER_H
+#ifndef PLAYER_CUBEGLRENDER_H
+#define PLAYER_CUBEGLRENDER_H
 #include <thread>
 #include "ImageDef.h"
 #include "VideoRender.h"
 #include "GLES3/gl3.h"
 #include "glm.hpp"
 #include "BaseGLRender.h"
-
-
 using namespace glm;
-class VideoGLRender: public VideoRender, public BaseGLRender{
+class CubeGLRender: public VideoRender, public BaseGLRender{
 public:
-    VideoGLRender();
-    virtual ~VideoGLRender();
+    CubeGLRender();
+    virtual ~CubeGLRender();
     virtual void Init(int videoWidth, int videoHeight, int *dstSize);
     virtual void RenderVideoFrame(NativeImage *pImage);
     virtual void UnInit();
@@ -25,7 +23,7 @@ public:
     virtual void OnSurfaceChanged(int w, int h);
     virtual void OnDrawFrame();
 
-    static VideoGLRender *GetInstance();
+    static CubeGLRender *GetInstance();
     static void ReleaseInstance();
 
     virtual void UpdateMVPMatrix(int angleX, int angleY, float scaleX, float scaleY);
@@ -36,10 +34,8 @@ public:
     }
 
 private:
-
-
     static std::mutex m_Mutex;
-    static VideoGLRender* s_Instance;
+    static CubeGLRender* s_Instance;
     GLuint m_ProgramObj = GL_NONE;
     GLuint m_AnotherProgramObj = GL_NONE;
     GLuint m_TextureIds[TEXTURE_NUM];
@@ -52,4 +48,4 @@ private:
     vec2 m_TouchXY;
     vec2 m_ScreenSize;
 };
-#endif //PLAYER_VIDEOGLRENDER_H
+#endif //PLAYER_CUBEGLRENDER_H

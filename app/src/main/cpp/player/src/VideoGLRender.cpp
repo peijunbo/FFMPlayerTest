@@ -15,7 +15,16 @@ static char vShaderStr[] =
         "    gl_Position = u_MVPMatrix * a_position;\n"
         "    v_texCoord = a_texCoord;\n"
         "}";
-
+static char fRGBAShaderStr[] =
+        "#version 300 es\n"
+        "precision highp float;\n"
+        "in vec2 v_texCoord;\n"
+        "layout(location = 0) out vec4 outColor;\n"
+        "uniform sampler2D s_TextureMap;//采样器\n"
+        "void main()\n"
+        "{\n"
+        "    outColor = texture(s_TextureMap, v_texCoord);\n"
+        "}";
 static char fShaderStr[] =
         "#version 300 es\n"
         "precision highp float;\n"
@@ -314,7 +323,7 @@ void VideoGLRender::UpdateMVPMatrix(TransformMatrix *pTransformMatrix) {
 void VideoGLRender::OnSurfaceCreated() {
     LOGE("VideoGLRender::OnSurfaceCreated");
 
-    m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fMeshShaderStr);
+    m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr);
     if (!m_ProgramObj)
     {
         LOGE("VideoGLRender::OnSurfaceCreated create program fail");
@@ -375,9 +384,8 @@ void VideoGLRender::OnSurfaceChanged(int w, int h) {
 void VideoGLRender::OnDrawFrame() {
     glClear(GL_COLOR_BUFFER_BIT);
     if(m_ProgramObj == GL_NONE|| m_RenderImage.ppPlane[0] == nullptr) return;
-    LOGE("VideoGLRender::OnDrawFrame [w, h]=[%d, %d], format=%d", m_RenderImage.width, m_RenderImage.height, m_RenderImage.format);
     m_FrameIndex++;
-
+    LOGD("draw thread %s", typeid(std::this_thread::get_id()).name());
 //    if(m_FrameIndex == 2)
 //        NativeImageUtil::DumpNativeImage(&m_RenderImage, "/sdcard", "2222");
 

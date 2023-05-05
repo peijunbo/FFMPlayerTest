@@ -8,13 +8,13 @@
     tools:context=".MainActivity">
 
     <com.example.player.MyGLSurfaceView
-        android:id="@+id/mysurface"
+        android:id="@+id/surface1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8" />
 
-    <SurfaceView
-        android:id="@+id/surface"
+    <com.example.player.MyGLSurfaceView
+        android:id="@+id/surface2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8" />

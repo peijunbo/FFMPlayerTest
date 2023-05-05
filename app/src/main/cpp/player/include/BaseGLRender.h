@@ -8,7 +8,8 @@
 #define VIDEO_GL_RENDER     0
 #define AUDIO_GL_RENDER     1
 #define VR_3D_GL_RENDER     2
-
+#define MATH_PI 3.1415926535897932384626433832802
+#define TEXTURE_NUM 3
 struct TransformMatrix {
     int degree;
     int mirror;
