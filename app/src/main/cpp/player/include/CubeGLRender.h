@@ -38,14 +38,14 @@ private:
     static CubeGLRender* s_Instance;
     GLuint m_ProgramObj = GL_NONE;
     GLuint m_AnotherProgramObj = GL_NONE;
-    GLuint m_TextureIds[TEXTURE_NUM];
-    GLuint m_VaoId;
-    GLuint m_VboIds[3];
+    GLuint m_TextureIds[TEXTURE_NUM]{};
+    GLuint m_VaoId{};
+    GLuint m_VboIds[3]{};
     NativeImage m_RenderImage;
-    glm::mat4 m_MVPMatrix;
+    glm::mat4 m_MVPMatrix{};
 
-    int m_FrameIndex;
-    vec2 m_TouchXY;
-    vec2 m_ScreenSize;
+    int m_FrameIndex{};
+    vec2 m_TouchXY{};
+    vec2 m_ScreenSize{};
 };
 #endif //PLAYER_CUBEGLRENDER_H

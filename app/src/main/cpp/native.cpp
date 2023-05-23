@@ -48,21 +48,29 @@ Java_com_example_player_MyGLSurfaceView_00024MyGLRender_native_1OnDrawFrame(
         JNIEnv *env, jobject thiz, jint render_type) {
     videoGlRender->OnDrawFrame();
 }
+
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_player_MyGLSurfaceView_00024MyGLRender_native_1Play(JNIEnv *env,
-                                                                     jobject thiz,
-                                                                     jint player_handle) {
+Java_com_example_player_MyGLSurfaceView_seekTo(JNIEnv *env, jobject thiz, jfloat second) {
+    videoDecoder->SeekToPosition(second);
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_player_MyGLSurfaceView_play(JNIEnv *env, jobject thiz,
+                                                     jint player_handle) {
     LOGD("play playerid %d", player_handle);
     if (videoDecoder != nullptr) {
         videoDecoder->Start();
         LOGD("1 start");
     }
 }
-
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_example_player_MyGLSurfaceView_00024MyGLRender_native_1SeekTo(JNIEnv *env, jobject thiz,
-                                                                       jint destination) {
-
+Java_com_example_player_MyGLSurfaceView_pause(JNIEnv *env, jobject thiz) {
+    videoDecoder->Pause();
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_player_MyGLSurfaceView_start(JNIEnv *env, jobject thiz) {
+    videoDecoder->Start();
 }

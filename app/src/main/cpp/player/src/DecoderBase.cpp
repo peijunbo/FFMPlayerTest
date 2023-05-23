@@ -235,7 +235,7 @@ long DecoderBase::AVSync() {
 int DecoderBase::DecodeOnePacket() {
     if(m_SeekPosition > 0) {
         //seek to frame
-        auto seek_target = static_cast<int64_t>(m_SeekPosition * 1000000);//微秒
+        auto seek_target = static_cast<int64_t>(m_SeekPosition * AV_TIME_BASE);//微秒
         int64_t seek_min = INT64_MIN;
         int64_t seek_max = INT64_MAX;
         int seek_ret = avformat_seek_file(m_AVFormatContext, -1, seek_min, seek_target, seek_max, 0);

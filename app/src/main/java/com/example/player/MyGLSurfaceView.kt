@@ -21,8 +21,7 @@ class MyGLSurfaceView(context: Context?, attrs: AttributeSet? = null) :
         mGLRender.native_Init(url, 0, playerId, null)
     }
     fun play() {
-        Log.d(TAG, "play: $playerId")
-        mGLRender.native_Play(playerId)
+        play(playerId)
     }
 
     inner class MyGLRender : Renderer {
@@ -54,9 +53,12 @@ class MyGLSurfaceView(context: Context?, attrs: AttributeSet? = null) :
         private external fun native_OnSurfaceCreated(renderType: Int)
         private external fun native_OnSurfaceChanged(renderType: Int, width: Int, height: Int)
         private external fun native_OnDrawFrame(renderType: Int)
-        private external fun native_SeekTo(destination: Int)
-        external fun native_Play(playerHandle: Int)
+
     }
+    external fun play(playerHandle: Int)
+    external fun seekTo(second: Float)
+    external fun pause()
+    external fun start()
     companion object {
         private const val TAG = "MyGLSurfaceView"
 

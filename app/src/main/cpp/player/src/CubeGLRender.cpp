@@ -189,8 +189,8 @@ void CubeGLRender::UpdateMVPMatrix(int angleX, int angleY, float scaleX, float s
     angleY = angleY % 360;
 
     //转化为弧度角
-    float radiansX = static_cast<float>(MATH_PI / 180.0f * angleX);
-    float radiansY = static_cast<float>(MATH_PI / 180.0f * angleY);
+    auto radiansX = static_cast<float>(MATH_PI / 180.0f * angleX);
+    auto radiansY = static_cast<float>(MATH_PI / 180.0f * angleY);
     // Projection matrix
     glm::mat4 Projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f);
     //glm::mat4 Projection = glm::frustum(-ratio, ratio, -1.0f, 1.0f, 4.0f, 100.0f);
@@ -307,7 +307,7 @@ void CubeGLRender::OnSurfaceCreated() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)nullptr);
     glEnableVertexAttribArray(0);
     // texture coord attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -332,7 +332,7 @@ void CubeGLRender::OnSurfaceCreated() {
 
 void CubeGLRender::OnSurfaceChanged(int w, int h) {
     LOGE("CubeGLRender::OnSurfaceChanged [w, h]=[%d, %d]", w, h);
-    m_ScreenSize.x = w;
+    m_ScreenSize.x =  w;
     m_ScreenSize.y = h;
     glViewport(0, 0, w, h);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

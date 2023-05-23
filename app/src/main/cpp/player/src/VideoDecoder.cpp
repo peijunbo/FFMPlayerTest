@@ -14,14 +14,6 @@ void VideoDecoder::OnDecoderReady() {
         m_VideoRender->Init(m_VideoWidth, m_VideoHeight, dstSize);
         m_RenderWidth = dstSize[0];
         m_RenderHeight = dstSize[1];
-
-        if (m_VideoRender->GetRenderType() == VIDEO_RENDER_ANWINDOW) {
-            int fps = 25;
-            long videoBitRate = m_RenderWidth * m_RenderHeight * fps * 0.2;
-//            m_pVideoRecorder = new SingleVideoRecorder("/sdcard/learnffmpeg_output.mp4", m_RenderWidth, m_RenderHeight, videoBitRate, fps);
-//            m_pVideoRecorder->StartRecord();
-        }
-
         m_RGBAFrame = av_frame_alloc();
         int bufferSize = av_image_get_buffer_size(DST_PIXEL_FORMAT, m_RenderWidth, m_RenderHeight,
                                                   1);
@@ -31,10 +23,10 @@ void VideoDecoder::OnDecoderReady() {
 
         m_SwsContext = sws_getContext(m_VideoWidth, m_VideoHeight, GetCodecContext()->pix_fmt,
                                       m_RenderWidth, m_RenderHeight, DST_PIXEL_FORMAT,
-                                      SWS_FAST_BILINEAR, NULL, NULL, NULL);
+                                      SWS_FAST_BILINEAR, nullptr, nullptr, nullptr);
         m_RGBASwsContext = sws_getContext(m_VideoWidth, m_VideoHeight, GetCodecContext()->pix_fmt,
                                           m_VideoWidth, m_VideoHeight, AV_PIX_FMT_RGBA,
-                                          SWS_FAST_BILINEAR, NULL, NULL, NULL);
+                                          SWS_FAST_BILINEAR, nullptr, nullptr, nullptr);
 
     } else {
         LOGE("VideoDecoder::OnDecoderReady m_VideoRender == null");
